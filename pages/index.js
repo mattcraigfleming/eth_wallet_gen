@@ -17,7 +17,7 @@ export default function Home() {
   const [account, setAccount] = useState({});
   const [balance, setBalance] = useState('');
   const [loading, setLoading] = useState(false);
-  const web3 = new Web3API(new Web3API.providers.HttpProvider('http://127.0.0.1:8545'));
+  const web3 = new Web3API(new Web3API.providers.HttpProvider('https://rinkeby.infura.io/v3/1719ec25b41248c4baabfe20bc98ae44'));
 
   const createAccount = async () => {
     setLoading(true);
