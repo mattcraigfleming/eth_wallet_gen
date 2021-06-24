@@ -5,6 +5,7 @@
     "dev": "next && ganache-cli",
     "build": "next build",
     "start:web": "next start",
+    "export": "next build && next export",
     "start:blockchain": "ganache-cli",
     "prettier": "prettier 'src/**/*.ts'",
     "prettier:fix": "prettier --write 'src/**/*.ts'",
