@@ -1,22 +1,21 @@
 import { useState } from 'react';
-import { Form, Select, Spin, Typography, Button, Card, message, Modal } from 'antd';
+import { Form, Select, Spin, Typography, Button, Card, message, Modal, PageHeader } from 'antd';
 import QRCode from 'react-qr-code';
 import { PandaSvg } from '../assets/PandaSvg';
 import { useEthContext } from '../utils/eth';
 // import { useBtcContext } from '../utils/btc';
-import Link from 'next/link';
-import { LeftCircleOutlined } from '@ant-design/icons';
+import { Icon, InlineIcon } from '@iconify/react';
+import ethIcon from '@iconify/icons-cryptocurrency/eth';
+import btcIcon from '@iconify/icons-cryptocurrency/btc';
+import { useRouter } from 'next/router';
 
 const { Text, Paragraph, Title } = Typography;
 const FormItem = Form.Item;
 const Option = Select.Option;
 
-const content = {
-  marginTop: '100px',
-};
-
 export default function Wallet() {
   const [form] = Form.useForm();
+  const router = useRouter();
   const [account, setAccount] = useState({});
   const [balance, setBalance] = useState('');
   const [loading, setLoading] = useState(false);
@@ -43,27 +42,23 @@ export default function Wallet() {
     showModal();
   };
 
-//   const createWallet = async () => {
-//     let wallet = web3.eth.accounts.wallet.create(1);
-//     console.log(wallet);
-//     message.success({
-//       content: `Wallet created: ${wallet[0].address} with number of accounts: ${wallet.length}`,
-//       className: 'custom-class',
-//       style: {
-//         marginTop: '20vh',
-//       },
-//     });
-//     let encryptedWallet = wallet.encrypt(web3.utils.randomHex(32));
-//     console.log(encryptedWallet);
-//   };
+  //   const createWallet = async () => {
+  //     let wallet = web3.eth.accounts.wallet.create(1);
+  //     console.log(wallet);
+  //     message.success({
+  //       content: `Wallet created: ${wallet[0].address} with number of accounts: ${wallet.length}`,
+  //       className: 'custom-class',
+  //       style: {
+  //         marginTop: '20vh',
+  //       },
+  //     });
+  //     let encryptedWallet = wallet.encrypt(web3.utils.randomHex(32));
+  //     console.log(encryptedWallet);
+  //   };
 
   return (
-    <div style={content}>
-    <div style={{padding: 10}}>
-    <Link href="/">
-        <Button type="primary" icon={<LeftCircleOutlined />} />
-      </Link>
-    </div>
+    <div>
+      <PageHeader className="site-page-header" onBack={() => router.back()} title="Home" subTitle="Go back" />
       <div className="text-center mb-5">
         <PandaSvg />
         <Title level={3}>Generate Wallet</Title>
@@ -73,9 +68,11 @@ export default function Wallet() {
           <Form form={form} layout="horizontal" onFinish={createAccount}>
             <FormItem label="Wallet:">
               <Select size="large" defaultValue="eth" style={{ width: 292 }} name="walletSelect">
-                <Option value="eth">Ethereum</Option>
+                <Option value="eth">
+                  Ethereum <InlineIcon icon={ethIcon} />
+                </Option>
                 <Option value="btc" disabled>
-                  Bitcoin (coming soon)
+                  Bitcoin (coming soon) <InlineIcon icon={btcIcon} />
                 </Option>
               </Select>
             </FormItem>
@@ -106,7 +103,7 @@ export default function Wallet() {
           ) : (
             <Card
               size="small"
-              title="Test Ethereum Account"
+              title={`Test Ethereum Account`}
               extra={<a onClick={handleCancel}>Reset</a>}
               style={{ textOverflow: 'clip' }}
             >
@@ -121,7 +118,11 @@ export default function Wallet() {
             </Card>
           )}
           <br />
-          {balance ? <Text keyboard>Balance: {balance}</Text> : null}
+          {balance ? (
+            <Text keyboard>
+              Balance: {balance} <InlineIcon icon={ethIcon} />
+            </Text>
+          ) : null}
         </Modal>
       </div>
     </div>

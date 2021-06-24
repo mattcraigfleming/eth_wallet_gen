@@ -46,6 +46,8 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@iconify/icons-cryptocurrency": "^1.1.2",
+    "@iconify/react": "^1.1.4",
     "@typescript-eslint/eslint-plugin": "4.28.0",
     "@typescript-eslint/parser": "4.28.0",
     "eslint": "7.29.0",
