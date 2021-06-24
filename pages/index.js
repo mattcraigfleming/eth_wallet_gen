@@ -76,7 +76,7 @@ export default function Home() {
               Cancel
             </Button>
             <Button size="large" style={{ marginLeft: 8 }} onClick={createWallet}>
-              Create Wallet
+              Account within Wallet
             </Button>
           </FormItem>
         </Form>
