@@ -30,20 +30,19 @@ export default function Home() {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-  const web3 = new Web3API(new Web3API.providers.HttpProvider('https://rinkeby.infura.io/v3/1719ec25b41248c4baabfe20bc98ae44'));
+  const web3 = new Web3API(
+    new Web3API.providers.HttpProvider('https://rinkeby.infura.io/v3/1719ec25b41248c4baabfe20bc98ae44'),
+  );
 
   const createAccount = async () => {
     setLoading(true);
     let acc = web3.eth.accounts.create(web3.utils.randomHex(32));
     let newAcc = await acc;
     let balance = await web3.eth.getBalance(newAcc.address);
-    console.log(balance);
-    console.log(newAcc);
-    console.log(web3.eth.providers);
     setBalance(balance);
     setAccount(newAcc);
     setLoading(false);
-    showModal()
+    showModal();
   };
 
   const createWallet = async () => {
@@ -57,7 +56,7 @@ export default function Home() {
       },
     });
     let encryptedWallet = wallet.encrypt(web3.utils.randomHex(32));
-    console.log(encryptedWallet)
+    console.log(encryptedWallet);
   };
 
   const onReset = () => {
@@ -73,43 +72,59 @@ export default function Home() {
         <p className="mb-0 mt-3 text-disabled">Generate Cryptocurrency Wallet!</p>
       </div>
       <div>
-      <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-        <Form form={form} layout="horizontal" onFinish={createAccount}>
-          <FormItem label="Wallet:">
-            <Select size="large" defaultValue="eth" style={{ width: 292 }} name="walletSelect">
-              <Option value="eth">Ethereum</Option>
-              <Option value="btc" disabled>
-                Bitcoin (coming soon)
-              </Option>
-            </Select>
-          </FormItem>
-          <FormItem>
-            <Button size="large" style={{ marginLeft: 28 }} type="primary" htmlType="submit">
-              Generate
-            </Button>
-            <Button size="large" style={{ marginLeft: 8 }} onClick={onReset}>
-              Cancel
-            </Button>
-       
-          </FormItem>
-        </Form>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Form form={form} layout="horizontal" onFinish={createAccount}>
+            <FormItem label="Wallet:">
+              <Select size="large" defaultValue="eth" style={{ width: 292 }} name="walletSelect">
+                <Option value="eth">Ethereum</Option>
+                <Option value="btc" disabled>
+                  Bitcoin (coming soon)
+                </Option>
+              </Select>
+            </FormItem>
+            <FormItem>
+              <Button loading={loading} size="large" style={{ width: 220 }} type="primary" htmlType="submit">
+                Generate
+              </Button>
+            </FormItem>
+          </Form>
         </div>
-        <Modal title="Wallet Details" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-        <Card size="small" title="Test Ethereum Account" extra={<a onClick={handleCancel}>Reset</a>} style={{  textOverflow: 'clip'}}>
-              {loading ? <Spin /> : null}
+        <Modal
+          title="Wallet Details"
+          visible={isModalVisible}
+          onCancel={handleCancel}
+          footer={[
+            <Button key="back" onClick={handleCancel}>
+              Cancel
+            </Button>,
+            <Button loading={loading} key="submit" type="primary" loading={loading} onClick={createAccount}>
+              Generate
+            </Button>,
+          ]}
+        >
+        
+          {loading ? (
+            <Spin size="large" />
+          ) : (
+            <Card
+              size="small"
+              title="Test Ethereum Account"
+              extra={<a onClick={handleCancel}>Reset</a>}
+              style={{ textOverflow: 'clip' }}
+            >
               <Paragraph copyable>
                 <span style={{ fontWeight: 'bold' }}>Public Key:</span> {account.address}
               </Paragraph>
               <Paragraph copyable>
                 <span style={{ fontWeight: 'bold' }}>Private Key: </span> {account.privateKey}
               </Paragraph>
-            
+
               <QRCode value={account.address} />
             </Card>
-            <br />
-            {balance ? <Text keyboard>Balance: {balance}</Text> : null}
-      </Modal>
-  
+          )}
+          <br />
+          {balance ? <Text keyboard>Balance: {balance}</Text> : null}
+        </Modal>
       </div>
     </div>
   );
