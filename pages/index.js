@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Form, Select, Spin, Typography, Button, Card, message, Modal } from 'antd';
 import QRCode from 'react-qr-code';
-import Web3API from 'web3';
 import { PandaSvg } from '../assets/PandaSvg';
+import { useEthContext } from '../utils/eth';
+import { useBtcContext } from '../utils/btc';
 
 const { Text, Paragraph } = Typography;
 const FormItem = Form.Item;
@@ -18,21 +19,17 @@ export default function Home() {
   const [balance, setBalance] = useState('');
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const web3 = useEthContext();
+  const createBitcoinAccount = useBtcContext()
+  
 
   const showModal = () => {
     setIsModalVisible(true);
   };
 
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-  const web3 = new Web3API(
-    new Web3API.providers.HttpProvider('https://rinkeby.infura.io/v3/1719ec25b41248c4baabfe20bc98ae44'),
-  );
 
   const createAccount = async () => {
     setLoading(true);
@@ -44,6 +41,7 @@ export default function Home() {
     setLoading(false);
     showModal();
   };
+  
 
   const createWallet = async () => {
     let wallet = web3.eth.accounts.wallet.create(1);
@@ -59,11 +57,6 @@ export default function Home() {
     console.log(encryptedWallet);
   };
 
-  const onReset = () => {
-    form.resetFields();
-    setAccount({});
-    setBalance('');
-  };
 
   return (
     <div style={content}>
@@ -86,6 +79,9 @@ export default function Home() {
               <Button loading={loading} size="large" style={{ width: 220 }} type="primary" htmlType="submit">
                 Generate
               </Button>
+                 <Button loading={loading} size="large" style={{ width: 220 }} type="primary" onClick={createBitcoinAccount}>
+                Generate BTC (check console)
+              </Button>
             </FormItem>
           </Form>
         </div>
@@ -102,7 +98,6 @@ export default function Home() {
             </Button>,
           ]}
         >
-        
           {loading ? (
             <Spin size="large" />
           ) : (
