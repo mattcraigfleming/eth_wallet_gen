@@ -70,7 +70,7 @@ export default function Home() {
     <div style={content}>
       <div className="text-center mb-5">
         <PandaSvg />
-        <p className="mb-0 mt-3 text-disabled">Generate Ethereum Wallet!</p>
+        <p className="mb-0 mt-3 text-disabled">Generate Cryptocurrency Wallet!</p>
       </div>
       <div>
       <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
@@ -79,7 +79,7 @@ export default function Home() {
             <Select size="large" defaultValue="eth" style={{ width: 292 }} name="walletSelect">
               <Option value="eth">Ethereum</Option>
               <Option value="btc" disabled>
-                Bitcoin
+                Bitcoin (coming soon)
               </Option>
             </Select>
           </FormItem>
