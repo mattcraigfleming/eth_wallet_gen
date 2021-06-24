@@ -79,9 +79,7 @@ export default function Home() {
               <Button loading={loading} size="large" style={{ width: 220 }} type="primary" htmlType="submit">
                 Generate
               </Button>
-                 <Button loading={loading} size="large" style={{ width: 220 }} type="primary" onClick={createBitcoinAccount}>
-                Generate BTC (check console)
-              </Button>
+        
             </FormItem>
           </Form>
         </div>
