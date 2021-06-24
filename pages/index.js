@@ -81,8 +81,7 @@ export default function Home() {
           </FormItem>
         </Form>
         {account.address ? (
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Card size="small" title="Generated Account" extra={<a href="#">Reset</a>} style={{ width: 700 }}>
+            <Card size="small" title="Generated Account" extra={<a href="#">Reset</a>} style={{ width: 'auto' }}>
               {loading ? <Spin /> : null}
               <Paragraph copyable>
                 <span style={{ fontWeight: 'bold' }}>Public Key:</span> {account.address}
@@ -93,7 +92,6 @@ export default function Home() {
               {balance ? <Text keyboard>Balance: {balance}</Text> : null}
               <QRCode value={account.address} />
             </Card>
-          </div>
         ) : null}
       </div>
     </div>
