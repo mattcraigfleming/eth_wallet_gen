@@ -113,8 +113,9 @@ export default function Wallet() {
               <Paragraph copyable>
                 <span style={{ fontWeight: 'bold' }}>Private Key: </span> {account.privateKey}
               </Paragraph>
-
-              <QRCode value={account.address} />
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <QRCode value={account.address} level="H" />
+              </div>
             </Card>
           )}
           <br />
