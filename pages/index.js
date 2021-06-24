@@ -5,7 +5,7 @@ import { PandaSvg } from '../assets/PandaSvg';
 import { useEthContext } from '../utils/eth';
 import { useBtcContext } from '../utils/btc';
 
-const { Text, Paragraph } = Typography;
+const { Text, Paragraph, Title } = Typography;
 const FormItem = Form.Item;
 const Option = Select.Option;
 
@@ -20,8 +20,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const web3 = useEthContext();
-  const createBitcoinAccount = useBtcContext()
-  
+  // const createBitcoinAccount = useBtcContext();
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -41,7 +40,6 @@ export default function Home() {
     setLoading(false);
     showModal();
   };
-  
 
   const createWallet = async () => {
     let wallet = web3.eth.accounts.wallet.create(1);
@@ -57,12 +55,11 @@ export default function Home() {
     console.log(encryptedWallet);
   };
 
-
   return (
     <div style={content}>
       <div className="text-center mb-5">
         <PandaSvg />
-        <p className="mb-0 mt-3 text-disabled">Generate Cryptocurrency Wallet!</p>
+        <Title level={3}>Generate Cryptocurrency Wallet!</Title>
       </div>
       <div>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -75,12 +72,13 @@ export default function Home() {
                 </Option>
               </Select>
             </FormItem>
-            <FormItem>
-              <Button loading={loading} size="large" style={{ width: 220 }} type="primary" htmlType="submit">
-                Generate
-              </Button>
-        
-            </FormItem>
+            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+              <FormItem>
+                <Button loading={loading} size="large" style={{ width: 220 }} type="primary" htmlType="submit">
+                  Generate
+                </Button>
+              </FormItem>
+            </div>
           </Form>
         </div>
         <Modal
